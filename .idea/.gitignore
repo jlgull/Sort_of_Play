@@ -1,0 +1,7 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Added by jlh on 01/27/2023
+*.xml
+*.iml
