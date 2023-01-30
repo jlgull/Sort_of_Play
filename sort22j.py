@@ -4,6 +4,7 @@
 # Sort a group of items; integers, floating point or string.
 #   Using a bubble sort from the internet.
 # Modified the performance time to a single line.
+# Modified to allow repeated performance.
 # Program name: sort19t.py
 #
 
@@ -128,116 +129,135 @@ show_output = ''
 swap_count = 0
 data_type = 'string'
 
-# Start of the Main program.
+# Use while, regarding the desire to re-run the program.
+# Set the while control value to "Y".
+do_again = "Y"
+while do_again != "N":
 
-clear()
 
-# usage statement and get input from user
-print('\nThis program will sort random strings, integers (whole numbers), or floating point (decimal numbers).')
-user_input = input('\nEnter a letter, whole number, or decimal number (as an example): ')
+    # Start of the Main program.
 
-# detect if user_input is integer
-try:
-    user_input = int(user_input)
-    data_type = 'integer'
-except:
-    pass
+    clear()
 
-# if data_type is still "string" (meaning it wasn't converted to an integer),
-# detect if it is a floating point number
-if data_type == 'string':
+    # usage statement and get input from user
+    print('\nThis program will sort random strings, integers (whole numbers), or floating point (decimal numbers).')
+    user_input = input('\nEnter a letter, whole number, or decimal number (as an example): ')
+
+    # detect if user_input is integer
     try:
-        user_input = float(user_input)
-        data_type = 'floating point'
+        user_input = int(user_input)
+        data_type = 'integer'
     except:
         pass
 
-# if data_type is integer or floating point, ask user if they really wanted a string - as
-# entries such as 1 or 3.14 can also be strings
-if data_type != 'string':
-    if (input(f'\nThe data type entered was {data_type}. If it should be a string, enter y: ')) == 'y':
-        data_type = 'string'
-
-print(f'\nThe list will be made up of {data_type}s.')
-
-while True:
-    try:
-        size_of_list = int(input(f"\nHow many {data_type} values do you want sorted? "))
-        break
-    except:
-        print('Please enter an integer for the number of values you want.')
-        continue
-    
-# Generate the type and number of items to be sorted.
-if data_type != 'string':
-    
-    # since the list will be numbers (integers or floating points),
-    # ask the user for minimum and maximum values
-    print('\nEnter minimum and maximum values for the number list.')
-    while True:
-
-        min = input('min: ')
-        max = input('max: ')
+    # if data_type is still "string" (meaning it wasn't converted to an integer),
+    # detect if it is a floating point number
+    if data_type == 'string':
         try:
-            min = int(min)
-            max = int(max)
+            user_input = float(user_input)
+            data_type = 'floating point'
         except:
-            print('\nPlease enter a number for min and max!')
-            continue
+            pass
 
-        if max < min:
-            print('\nmin must be less than max!')
-            continue
-        else:
+    # if data_type is integer or floating point, ask user if they really wanted a string - as
+    # entries such as 1 or 3.14 can also be strings
+    if data_type != 'string':
+        if (input(f'\nThe data type entered was {data_type}. If it should be a string, enter y: ')) == 'y':
+            data_type = 'string'
+
+    print(f'\nThe list will be made up of {data_type}s.')
+
+    while True:
+        try:
+            size_of_list = int(input(f"\nHow many {data_type} values do you want sorted? "))
             break
+        except:
+            print('Please enter an integer for the number of values you want.')
+            continue
 
     # Generate the type and number of items to be sorted.
-    for i in range(size_of_list):
-        if data_type == 'integer':
-            selected_list.append(randint(min, max))
-        else:
-            selected_list.append(uniform(min, max))
-else:
-    
-    # generate string list (updated one from Jonathan's sort11.py)
-    for i in range(75):
-        for j in range(75):
-            for k in range(75):
-                word_list.append(chr(i + 48) + chr(j + 48) + chr(k + 48))
+    if data_type != 'string':
 
-    # word_list, at this point has 421,875 elements. use the sample()
-    # function to pick size_of_list elements and place the result into
-    # selected_list
-    selected_list = sample(word_list, size_of_list)
+        # since the list will be numbers (integers or floating points),
+        # ask the user for minimum and maximum values
+        print('\nEnter minimum and maximum values for the number list.')
+        while True:
 
-show_output = input('\nWatch the sorting as it takes place (slows processing)? (y = yes, anything else = no): ')
+            min = input('min: ')
+            max = input('max: ')
+            try:
+                min = int(min)
+                max = int(max)
+            except:
+                print('\nPlease enter a number for min and max!')
+                continue
 
-# Save the original list for later review.
-temp_list = selected_list[:]
+            if max < min:
+                print('\nmin must be less than max!')
+                continue
+            else:
+                break
 
-# Start the timer for the sort process
-start_time = thread_time_ns()
+        # Generate the type and number of items to be sorted.
+        for i in range(size_of_list):
+            if data_type == 'integer':
+                selected_list.append(randint(min, max))
+            else:
+                selected_list.append(uniform(min, max))
+    else:
 
-# call sort function
-selected_list, swaps = sortRoutine(selected_list, show_output)
+        # generate string list (updated one from Jonathan's sort11.py)
+        for i in range(75):
+            for j in range(75):
+                for k in range(75):
+                    word_list.append(chr(i + 48) + chr(j + 48) + chr(k + 48))
 
-# Calculate the actual run time.
-run_time = thread_time_ns() - start_time
+        # word_list, at this point has 421,875 elements. use the sample()
+        # function to pick size_of_list elements and place the result into
+        # selected_list
+        selected_list = sample(word_list, size_of_list)
 
-# Print out the results
-print(f'\nThe unsorted list:\n{temp_list}')
-print(f'\nThe sorted list :\n{selected_list}')
-print(f'\nThe list to be sorted had {len(selected_list)} {data_type} items in it.')
-print(f'\nThe sorting process took {swaps} swaps and the run time was:')
+    show_output = input('\nWatch the sorting as it takes place (slows processing)? (y = yes, anything else = no): ')
 
-# Modified this section to display the run_time of the sort,
-#   with the correct time units.
-printTimer(run_time)
+    # Save the original list for later review.
+    temp_list = selected_list[:]
 
-if (input('\n\nCompare time to built-in sort() routine? (y = yes, anything else is no): ')) == 'y':
-    print(f'\nThe unsorted list:\n{temp_list}')
+    # Start the timer for the sort process
     start_time = thread_time_ns()
-    temp_list.sort()
+
+    # call sort function
+    selected_list, swaps = sortRoutine(selected_list, show_output)
+
+    # Calculate the actual run time.
     run_time = thread_time_ns() - start_time
-    print(f'\nThe sorted list :\n{temp_list}')
+
+    # Print out the results
+    print(f'\nThe unsorted list:\n{temp_list}')
+    print(f'\nThe sorted list :\n{selected_list}')
+    print(f'\nThe list to be sorted had {len(selected_list)} {data_type} items in it.')
+    print(f'\nThe sorting process took {swaps} swaps and the run time was:')
+
+    # Modified this section to display the run_time of the sort,
+    #   with the correct time units.
     printTimer(run_time)
+
+    if (input('\n\nCompare time to built-in sort() routine? (y = yes, anything else is no): ')) == 'y':
+        print(f'\nThe unsorted list:\n{temp_list}')
+        start_time = thread_time_ns()
+        temp_list.sort()
+        run_time2 = thread_time_ns() - start_time
+        print(f'\nThe sorted list :\n{temp_list}')
+        printTimer(run_time2)
+        print(f'\nThe built-in sort routine is {run_time/run_time2:,.0f} times faster.')
+
+    # Ask if the user would like to play again.
+    # Also, validate for the correct response.
+    while True:
+        print("\nWould you like to play again? Enter (Y) for yes or (N) for no.", end=" ")
+        do_again = input().upper()
+        if do_again == "N" or do_again == "Y":
+            break
+        else:
+            print("The only valid entries are either a Y or an N.")
+
+# End of program
