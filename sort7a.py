@@ -96,7 +96,7 @@ while j < len(user_list):
         else:
             print(f'--- NOT swapping {user_list[i]} with {user_list[i + 1]}')
             if user_list == temp_list and i == num_entries :
-                # j = len(user_list) + 1
+            # j = len(user_list) + 1
 
         print(f'The current list: {user_list}\n')
 
