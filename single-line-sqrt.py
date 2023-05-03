@@ -86,9 +86,11 @@ while do_again != "N":
         continue
 
     print(f"\n\tThe floating point number entered was:\t\t{base_number:.3f}"
-        f"\n\tThe absolute value of the entered number is:\t{fabs(base_number):.3f}"
-        f"\n\tThe square root of the entered number is:\t"
-        f"{sqrt(base_number) if base_number > 0 else str(sqrt(fabs(base_number))) + ' i'}")
+        f"\n\tThe absolute value of the entered number is:\t{fabs(base_number):.3f}")
+        # f"\n\tThe square root of the entered number is:\t"
+        # f"{sqrt(base_number) if base_number > 0 else str(sqrt(fabs(base_number))) + ' i'}")
+
+    print(f'\n\tThe square root of {base_number} is {sqrt(fabs(base_number)):.3f}{"ⅈ" if base_number < 0 else ""}')
 
     # Ask if the user would like to play again.
     # Also, validate for the correct response.
